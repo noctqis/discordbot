@@ -119,6 +119,21 @@ async def on_command_error(ctx, error):
     else:
         raise error
 
-# Run the bot
-TOKEN = "MTM0OTkyODY3NTIwNTcwOTkzNA.GQIp8u.6HUh5v9OxdwL0naBpnGmrLUFn4aDty1hiyGo8U"
-bot.run(TOKEN)
+import os
+from dotenv import load_dotenv
+import discord
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get the token from the environment variable
+TOKEN = os.getenv("DISCORD_TOKEN")
+
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'Logged in as {client.user}')
+
+client.run(TOKEN)
